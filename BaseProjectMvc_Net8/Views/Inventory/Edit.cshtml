@@ -1,0 +1,29 @@
+﻿@model BaseProjectMvc_Net8.Data.Entities.Inventory
+
+
+
+<div>
+    <form method="post" asp-action="Edit" asp-controller="Inventory">
+        <div>
+            <label>
+                Product Name
+                <input name="product.product_name" type="text" value="@Model.Product?.Product_Name" />
+                <input type="hidden" name="product.id" value="@Model.Product?.Id" />
+                <input type="hidden" name="product_id" value="@Model.Product_Id" />
+            </label>
+        </div>
+        <div>
+            <label>
+                Stock
+                <input name="stock" type="number" value="@Model.Stock" />
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Modify" />
+        </div>
+    </form>
+</div>
+
+<div>
+    @Html.ActionLink("Back to Inventory", "Index", "Inventory", null, new { @class = "btn btn-outline-primary" })
+</div>

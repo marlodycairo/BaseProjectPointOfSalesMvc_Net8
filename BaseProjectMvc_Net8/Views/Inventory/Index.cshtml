@@ -1,0 +1,32 @@
+﻿@model IEnumerable<BaseProjectMvc_Net8.Data.Entities.Inventory>
+
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product name</th>
+                <th scope="col">Stock</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var item in Model)
+            {
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@item.Product?.Product_Name</td>
+                    <td>@item.Stock</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", "Inventory", new { id = item.Id }, new { @class= "btn btn-warning"})
+                    </td>
+                </tr>             
+            }
+        </tbody>
+    </table>
+</div>
+
+<div>
+    @Html.ActionLink("Create inventory", "CreateInventory", "Inventory", null, new { @class = "btn btn-primary" })
+</div>

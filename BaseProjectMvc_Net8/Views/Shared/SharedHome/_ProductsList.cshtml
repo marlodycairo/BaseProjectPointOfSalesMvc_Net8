@@ -1,0 +1,37 @@
+﻿@model BaseProjectMvc_Net8.Models.ProductViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    // var count = 1;
+}
+
+
+
+@* <table class="table table-bordered border-3">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Product</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Subtotal</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ProductsList!)
+        {
+            <tr>
+                <th scope="row">@count</th>
+                <td>@item.Product_Name</td>
+                <td>@item.Price</td>
+                <td>@item.Quantity</td>
+                <td>@item.Subtotal</td>
+            <td>@Html.ActionLink("Add", "SelectProducts", "Home", new { product_Id = @item.Product_Id }, new { @class = "btn btn-success" })</td>
+            </tr>
+            count++;
+        }
+    </tbody>
+</table> *@

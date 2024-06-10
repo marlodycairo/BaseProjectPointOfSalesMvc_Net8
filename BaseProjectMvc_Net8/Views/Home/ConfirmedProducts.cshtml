@@ -1,0 +1,40 @@
+﻿@model BaseProjectMvc_Net8.Models.ItemModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div>
+    <form method="post" asp-action="ConfirmedProducts" asp-controller="Home">
+        <div>
+            <label>Product:
+                <input name="product_name" value="@Model.Product_Name" />
+            </label>
+        </div>
+        <div>
+            <label>Quantity:
+                <input name="quantity" value="@Model.Quantity" />
+            </label>
+       </div> 
+        <div>
+            <label>Price:
+                <input name="price" value="@Model.Price" />
+            </label>
+        </div>
+        <div>
+            <label>Subtotal:
+                <input name="subtotal" value="@Model.Subtotal" />
+            </label>
+        </div>
+        <div>
+            <div>
+                @Html.ActionLink("Confirm", "ConfirmedProducts", "Home", new { id = Model.Id }, new { @class = "btn btn-primary" })
+            </div>
+            <div>
+                @Html.ActionLink("Cancel", "Index", "Home", null, new { @class="btn btn-primary" })
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,19 @@
+﻿@using BaseProjectMvc_Net8.Data.Entities
+@model BaseProjectMvc_Net8.Data.Entities.Category
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container text-center">
+    <h3 class="display-3">Details</h3>
+    <div>
+        <label>Category Name</label>
+        <input name="category_name" value="@Model.Category_Name" />
+    </div>
+</div>
+<div class="m-3">
+    @Html.ActionLink("Back to Categories", "Index", "Category", null, new { @class = "btn btn-primary" })
+</div>

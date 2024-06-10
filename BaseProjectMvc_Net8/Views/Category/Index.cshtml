@@ -1,0 +1,31 @@
+﻿@using BaseProjectMvc_Net8.Data.Entities
+@model IEnumerable<BaseProjectMvc_Net8.Data.Entities.Category>
+
+
+
+<div class="container text-center" style="width:auto">
+    <h4 class="display-3">Categories</h4>
+    <div class="text-lg-start m-3">
+        @Html.ActionLink("Add new category", "CreateCategory", "Category", null, new { @class = "btn btn-primary" })
+    </div>
+    <div class="row row-cols-2">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                @item.Category_Name
+            </div>
+            <div class="col">
+                @Html.ActionLink("Details", "Details", "Category", new { id = item.Id }, new{ @class="btn btn-primary"})
+                @Html.ActionLink("Edit", "Edit", "Category", new { id = item.Id }, new { @class ="btn btn-warning"})
+                @Html.ActionLink("Delete", "Edit", "Category", new { id = item.Id }, new { @class = "btn btn-danger"})
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="container m-3">
+    <div>
+        @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-primary" })
+    </div>
+</div>

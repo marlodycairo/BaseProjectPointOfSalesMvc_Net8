@@ -1,0 +1,48 @@
+﻿@model BaseProjectMvc_Net8.Models.ProductViewModel
+
+@*
+    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+<div class="container">
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+            <h3 class="card-title">Product @Model.ItemSelected!.Product_Name</h3>
+            <p class="card-text">Price $ @Model.ItemSelected.Price</p>
+            <p class="card-text">Quantity: @Model.ItemSelected.Quantity</p>
+            <p class="card-text">Subtotal $ @Model.ItemSelected.Subtotal</p>
+            <p>
+                @Html.ActionLink("Delete", "DeleteProductSelected", "Home", new { product_Id = Model.ItemSelected.Id }, new { @class = "btn btn-danger" })
+            </p>
+        </div>
+    </div>
+</div>
+
+<hr />
+<div class="container">
+    <table class="table table-bordered border-3">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Product</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Subtotal</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ItemsSelected!)
+            {
+                <tr>
+                    <th scope="row">1</th>
+                    <td>@item.Product_Name</td>
+                    <td>@item.Price</td>
+                    <td>@item.Quantity</td>
+                    <td>@item.Subtotal</td>
+                    <td>@Html.ActionLink("Delete", "DeleteProductSelected", "Home", new { product_Id = @item.Product_Id }, new { @class = "btn btn-danger" })</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

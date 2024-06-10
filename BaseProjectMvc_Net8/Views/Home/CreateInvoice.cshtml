@@ -1,0 +1,30 @@
+﻿@using BaseProjectMvc_Net8.Extensions
+@model BaseProjectMvc_Net8.Models.ResponseViewModel
+
+@{
+}
+
+<div class="container-md">
+    <h3>Invoice</h3>
+    <div class="table-bordered" style="width:30%">
+        <p>&nbsp;&nbsp;&nbsp; Product Name    -   Quantity    -   Price</p>
+        <ul>
+            @foreach (var item in Model.ItemsSelected!)
+            {
+                <li>@item.Product_Name.ToUpper() - @item.Quantity - @item.Subtotal</li>
+            }
+        </ul>
+    </div>
+    
+
+    <p><strong>@ViewBag.Message</strong></p>
+
+    <div>
+
+            <form method="post" asp-action="ClearItems" asp-controller="Home">
+                <button type="submit">Back to home</button>
+            </form>
+    </div>
+</div>
+
+@* refresh la variable de sesión y quedar en 0 *@

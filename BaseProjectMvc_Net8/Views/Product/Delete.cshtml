@@ -1,0 +1,22 @@
+﻿@using BaseProjectMvc_Net8.Data.Entities
+@model BaseProjectMvc_Net8.Data.Entities.Product
+
+
+
+<div class="container">
+    <div class="text-center">
+        <h4>Are you sure you want delete this product?</h4>
+    </div>
+    <form method="post" asp-action="Delete" asp-controller="Product">
+        <div>
+            <label>Product Name</label>
+            <input type="text" name="product_name" value="@Model.Product_Name" />
+        </div>
+        <div>
+            <input type="submit" value="Delete" />
+        </div>
+    </form>
+</div>
+<div class="m-3">
+    @Html.ActionLink("Back to Products", "Index", "Product", null, new { @class = "btn btn-primary" })
+</div>

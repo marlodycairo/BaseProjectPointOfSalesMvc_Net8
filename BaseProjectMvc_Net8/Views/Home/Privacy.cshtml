@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Privacy Policy";
+}
+<h1>@ViewData["Title"]</h1>
+
+<p>Use this page to detail your site's privacy policy.</p>
+
+
+<div>
+    <form method="post" asp-action="Privacy" asp-controller="Home">
+        <div>
+            <label>
+                Name
+                <input type="text" name="name" placeholder="Insert your name" />
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Add User" />
+        </div>
+    </form>
+</div>
+
+<div>
+    @ViewBag.Response
+</div>
+
+
+<div>
+    <form method="post" asp-action="Beneficiaries" asp-controller="Home">
+        <div>
+            <label>
+                User
+                <input type="number" name="userId" placeholder="Insert your identification" />
+            </label>
+        </div>
+        <div>
+            <label>
+                Name
+                <input type="text" name="name" placeholder="Insert your name" />
+            </label>
+        </div>
+        <div>
+            <input type="submit" value="Add Beneficiary" />
+        </div>
+    </form>
+</div>

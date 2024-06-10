@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container">
+    <div class="text-start">
+        <h4 class="display-5">Products</h4>
+    </div>
+    <form method="post" asp-action="CreateProduct" asp-controller="Product">
+        <div>
+            <label>
+                Product name
+                <input type="text" name="product_name" />
+            </label>
+        </div>
+        <div>
+            <label>
+                Price
+                <input type="number" name="price" />
+            </label>
+        </div>
+        <div>
+            <label>
+                Category
+                <input name="category_id" />
+            </label>
+        </div>
+        <div>
+            <label>
+                <input type="submit" value="Add Product" />
+            </label>
+        </div>
+    </form>
+</div>
+<div>
+    @Html.ActionLink("Back to Products", "Index", "Product", null, new { @class = "btn btn-primary" })
+</div>

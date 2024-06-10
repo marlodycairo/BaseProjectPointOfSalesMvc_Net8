@@ -1,0 +1,12 @@
+﻿@model BaseProjectMvc_Net8.Models.ItemModel
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div>
+    <h4>El producto: @Model.Product_Name ya fue agregado.</h4>
+    <p>@Html.ActionLink("Back to home", "Index", "Home", null, new { @class="btn btn-outline-primary"})</p>
+</div>

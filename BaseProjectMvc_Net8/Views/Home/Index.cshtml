@@ -1,0 +1,149 @@
+﻿@model BaseProjectMvc_Net8.Models.ResponseViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="col-lg-6 col-sm-6">
+	<form method="post" asp-action="SearchProduct" asp-controller="Home" class="search-wrap">
+		<div class="input-group">
+			<input type="text" name="productName" class="form-control" placeholder="Search">
+			<div class="input-group-append">
+				<button class="btn btn-primary" type="submit">
+					<i class="fa fa-search"></i>
+				</button>
+			</div>
+		</div>
+	</form> <!-- search-wrap .end// -->
+</div>
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<section class="section-content padding-y-sm bg-default ">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-md-8 card padding-y-sm card ">
+				<span id="items">
+					<div class="row">
+						@foreach (var item in Model.ProductsList!)
+						{
+							<div class="col-md-3">
+								<form method="post" asp-action="AddItem" asp-controller="Home">
+									<figure class="card card-product">
+										<span class="badge-new"> NEW </span>
+										<div class="img-wrap">
+											<img src="~/images/items/farmaceutica.jpg">
+											<a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
+										</div>
+										<figcaption class="info-wrap">
+											<a href="#" class="title">@item.Product_Name</a>
+											<input type="hidden" name="product_name" value="@item.Product_Name" />
+											<div class="action-wrap">
+													<input type="hidden" name="product_Id" value="@item.Product_Id" />
+													<button class="btn btn-primary btn-sm float-right"><i class="fa fa-cart-plus"></i> Add</button>
+												@*<a href="@Url.Action("AddItem", "Home", new { id = @item.Product_Id})" class="btn btn-primary btn-sm float-right"> <i class="fa fa-cart-plus"></i> Add </a>
+											*@<div class="price-wrap h5">
+													<span class="price-new">$ @item.Price</span>
+													<input type="hidden" name="price" value="@item.Price" />
+												</div> <!-- price-wrap.// -->
+											</div> <!-- action-wrap -->
+										</figcaption>
+									</figure>
+								</form>
+							 <!-- card // -->
+						</div> <!-- col // -->
+						}
+					</div> <!-- row.// -->
+				</span>
+			</div>
+			<div class="col-md-4">
+				<div class="card">
+					<span id="cart">
+						<table class="table table-hover shopping-cart-wrap">
+							<thead class="text-muted">
+								<tr>
+									<th scope="col">Item</th>
+									<th scope="col" width="120">Qty</th>
+									<th scope="col" width="120">Price</th>
+									<th scope="col" class="text-right" width="200">Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var item in Model.ItemsSelected!)
+								{
+									<tr>
+										<form method="post" asp-action="CalculateSubtotal" asp-controller="Home">
+											<input type="hidden" name="id" value="@item.Id" />
+										<td>
+											<figure class="media">
+												<div class="img-wrap"><img src="~/images/items/farmaceutica.jpg" class="img-thumbnail img-xs"></div>
+												<figcaption class="media-body">
+													<h6 class="title text-truncate">@item.Product_Name </h6>
+													<input type="hidden" name="product_id" value="@item.Product_Id" />
+													<input type="hidden" name="product_name" value="@item.Product_Name" />
+												</figcaption>
+											</figure>
+										</td>
+										<td class="text-center">
+											<div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
+
+                                                <input onkeydown="return event.keyCode==13" type="number" name="quantity" min="1" value="1" />
+
+												@{
+
+												}
+
+
+@* 												<input class="btn btn-outline-info btn-sm" type="submit" value="Send" />
+ *@
+											</div>
+										</td>
+										<td>
+											<div class="price-wrap">
+												<var class="price">$ @item.Price</var>
+												<input type="hidden" name="price" value="@item.Price" />
+											</div> <!-- price-wrap .// -->
+										</td>
+										<td class="text-right">
+											<a href="@Url.Action("DeleteItem", "Home", new { id = item.Id})" class="btn btn-outline-danger"> <i class="fa fa-trash"></i></a>
+										</td>
+										</form>
+									</tr>
+								}
+							</tbody>
+						</table>
+					</span>
+				</div> <!-- card.// -->
+				<div class="box">
+					<dl class="dlist-align">
+						<dt>Tax: </dt>
+						<dd class="text-right">0%</dd>
+					</dl>
+					<dl class="dlist-align">
+						<dt>Discount:</dt>
+						<dd class="text-right"><a href="#">0%</a></dd>
+					</dl>
+					<dl class="dlist-align">
+						<dt>Sub Total:</dt>
+						<dd class="text-right">$ @Model.ItemSelected?.Subtotal</dd>
+					</dl>
+					<dl class="dlist-align">
+						<dt>Total: </dt>
+						<dd class="text-right h4 b"> $ @ViewBag.Total </dd>
+					</dl>
+					<div class="row">
+						<div class="col-md-6">
+							<form method="post" asp-action="ClearItems" asp-controller="Home">
+								<button class="btn  btn-default btn-error btn-lg btn-block" type="submit"><i class="fa fa-times-circle "></i>Cancel</button>
+							</form>
+@* 							<a href="" class="btn  btn-default btn-error btn-lg btn-block"><i class="fa fa-times-circle "></i> Cancel </a>
+ *@						</div>
+						<div class="col-md-6">
+							<a href="@Url.Action("CreateInvoice", "Home", new { items = Model.ItemsSelected.ToList() })" class="btn  btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i> Charge </a>
+						</div>
+					</div>
+				</div> <!-- box.// -->
+			</div>
+		</div>
+	</div><!-- container //  -->
+</section>

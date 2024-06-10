@@ -1,0 +1,23 @@
+﻿@using BaseProjectMvc_Net8.Data.Entities
+@model BaseProjectMvc_Net8.Data.Entities.Product
+
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<div class="container text-center">
+    <h3 class="display-3">Details</h3>
+    <div>
+        <label>Product</label>
+        <input name="product_name" value="@Model.Product_Name" />
+    </div>
+    <div>
+        <label>Price</label>
+        <input name="price" value="@Model.Price" />
+    </div>
+</div>
+<div class="m-3">
+    @Html.ActionLink("Back to Products", "Index", "Product", null, new { @class = "btn btn-primary" })
+</div>

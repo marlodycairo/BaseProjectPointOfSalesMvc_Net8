@@ -1,0 +1,22 @@
+﻿@using BaseProjectMvc_Net8.Data.Entities
+@model BaseProjectMvc_Net8.Data.Entities.Category
+
+
+
+<div class="container">
+    <div class="text-center">
+        <h4>Are you sure you want delete this category?</h4>
+    </div>
+    <form method="post" asp-action="Delete" asp-controller="Category">
+        <div>
+            <label>Category Name</label>
+            <input type="text" name="category_name" value="@Model.Category_Name" />
+        </div>
+        <div>
+            <input type="submit" value="Delete" />
+        </div>
+    </form>
+</div>
+<div class="m-3">
+    @Html.ActionLink("Back to Categories", "Index", "Category", null, new { @class = "btn btn-primary" })
+</div>

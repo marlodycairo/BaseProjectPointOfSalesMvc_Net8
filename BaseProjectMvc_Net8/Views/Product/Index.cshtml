@@ -1,0 +1,40 @@
+﻿@using BaseProjectMvc_Net8.Data.Entities
+@model IEnumerable<BaseProjectMvc_Net8.Data.Entities.Product>
+
+
+@{
+}
+
+
+<div class="container text-center" style="width:auto">
+    <h4 class="display-3">Products</h4>
+    <div class="text-lg-start m-3">
+        @Html.ActionLink("Add new product", "CreateProduct", "Product", null, new { @class = "btn btn-primary" })
+    </div>
+    <div class="row row-cols-3">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                @item.Product_Name
+            </div>
+            <div class="col">
+                @item.Price
+            </div>
+            <div class="col">
+                @Html.ActionLink("Details", "Details", "Product", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "Edit", "Product", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Edit", "Product", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </div>
+        }
+    </div>
+</div>
+
+
+<div class="container m-3">
+    <div>
+        @Html.ActionLink("Back to Home", "Index", "Home", null, new { @class = "btn btn-primary" })
+    </div>
+    <div>
+        @Html.ActionLink("Go to Inventory", "Index", "Inventory", null, new { @class = "btn btn-primary" })
+    </div>
+</div>
