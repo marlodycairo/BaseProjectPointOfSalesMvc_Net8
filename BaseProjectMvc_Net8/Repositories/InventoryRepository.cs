@@ -53,7 +53,9 @@ namespace BaseProjectMvc_Net8.Repositories
                 Stock = inventory.Stock
             };
 
-            _context.Inventories.Update(inventoryUpdated);
+            _context.ChangeTracker.Clear();
+
+			_context.Inventories.Update(inventoryUpdated);
 
             await _context.SaveChangesAsync();
 		}

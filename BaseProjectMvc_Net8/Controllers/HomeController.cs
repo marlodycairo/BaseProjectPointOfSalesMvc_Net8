@@ -136,7 +136,7 @@ namespace BaseProjectMvc_Net8.Controllers
                 //actualizar inventario
                 product!.Stock = product.Stock - item.Quantity;
 
-                await _inventoryRepository.UpdateInventory(product);
+				await _inventoryRepository.UpdateInventory(product);
             }
 
             var model = new ResponseViewModel

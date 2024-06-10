@@ -72,7 +72,7 @@
 								@foreach (var item in Model.ItemsSelected!)
 								{
 									<tr>
-										<form method="post" asp-action="CalculateSubtotal" asp-controller="Home">
+										<form id="quantityForm" method="post" asp-action="CalculateSubtotal" asp-controller="Home">
 											<input type="hidden" name="id" value="@item.Id" />
 										<td>
 											<figure class="media">
@@ -87,12 +87,7 @@
 										<td class="text-center">
 											<div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
 
-                                                <input onkeydown="return event.keyCode==13" type="number" name="quantity" min="1" value="1" />
-
-												@{
-
-												}
-
+												<input type="number" id="quantity" name="quantity" min="1" value="1" />
 
 @* 												<input class="btn btn-outline-info btn-sm" type="submit" value="Send" />
  *@
@@ -147,3 +142,20 @@
 		</div>
 	</div><!-- container //  -->
 </section>
+
+<script>
+
+	document.addEventListener('DOMContentLoaded', function () {
+		var input = document.getElementById('quantity');
+
+		input.addEventListener('keydown', function (event) {
+			if (event.key === 'Enter') {
+				event.preventDefault();
+
+				document.getElementById('quantityForm').submit();
+			}
+		});
+	});
+
+
+</script>
