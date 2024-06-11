@@ -1,7 +1,10 @@
-﻿@model BaseProjectMvc_Net8.Models.ResponseViewModel
+﻿@using BaseProjectMvc_Net8.Extensions
+@using Microsoft.AspNetCore.Http
+
+@model BaseProjectMvc_Net8.Models.ResponseViewModel
 
 @{
-    ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Home Page";
 }
 
 <div class="col-lg-6 col-sm-6">
@@ -72,8 +75,10 @@
 								@foreach (var item in Model.ItemsSelected!)
 								{
 									<tr>
+
+
 										<form id="quantityForm" method="post" asp-action="CalculateSubtotal" asp-controller="Home">
-											<input type="hidden" name="id" value="@item.Id" />
+										<input type="hidden" name="id" value="@item.Id" />
 										<td>
 											<figure class="media">
 												<div class="img-wrap"><img src="~/images/items/farmaceutica.jpg" class="img-thumbnail img-xs"></div>
@@ -87,10 +92,8 @@
 										<td class="text-center">
 											<div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
 
-												<input type="number" id="quantity" name="quantity" min="1" value="1" />
+												<input type="text" id="quantity" onchange="getQuantity(event)" onkeyup="getQuantity(event)" name="quantity" min="0" />
 
-@* 												<input class="btn btn-outline-info btn-sm" type="submit" value="Send" />
- *@
 											</div>
 										</td>
 										<td>
@@ -103,6 +106,7 @@
 											<a href="@Url.Action("DeleteItem", "Home", new { id = item.Id})" class="btn btn-outline-danger"> <i class="fa fa-trash"></i></a>
 										</td>
 										</form>
+
 									</tr>
 								}
 							</tbody>
@@ -148,14 +152,9 @@
 	document.addEventListener('DOMContentLoaded', function () {
 		var input = document.getElementById('quantity');
 
-		input.addEventListener('keydown', function (event) {
-			if (event.key === 'Enter') {
-				event.preventDefault();
-
-				document.getElementById('quantityForm').submit();
-			}
+		input.addEventListener('change', function () {
+			document.getElementById('quantityForm').submit();
 		});
 	});
-
 
 </script>
