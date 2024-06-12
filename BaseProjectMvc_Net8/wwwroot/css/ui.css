@@ -1903,7 +1903,7 @@ ul.row, ul.row-sm {
     font-size: 13px; }
 
 .card-product {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
   /* btn-overlay-bottom */ }
   .card-product:after {
     content: "";

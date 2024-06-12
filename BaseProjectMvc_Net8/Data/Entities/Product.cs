@@ -8,10 +8,10 @@ namespace BaseProjectMvc_Net8.Data.Entities
         [Key]
         public int Id { get; set; }
         public string Product_Name { get; set; } = string.Empty;
-        public decimal Price { get; set; }
+        public int Price { get; set; }
         public int Category_Id { get; set; }
 
         [ForeignKey("Category_Id")]
-        public Category? Category { get; set; }
+        public Category Category { get; set; }
     }
 }

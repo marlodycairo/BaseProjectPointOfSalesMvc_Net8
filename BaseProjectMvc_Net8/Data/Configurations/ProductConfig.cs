@@ -14,10 +14,10 @@ namespace BaseProjectMvc_Net8.Data.Configurations
                 .IsRequired()
                 .HasMaxLength(50);
 
-            builder.Property(p => p.Price)
-                .IsRequired()
-                .HasColumnType("decimal(10, 2)")
-                .HasDefaultValue(0.00m);
+            //builder.Property(p => p.Price)
+            //    .IsRequired()
+            //    .HasColumnType("decimal(10, 2)")
+            //    .HasDefaultValue(0.00m);
 
             builder.HasOne(p => p.Category)
                 .WithMany()

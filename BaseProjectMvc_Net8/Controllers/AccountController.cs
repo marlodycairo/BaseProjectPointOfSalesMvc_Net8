@@ -3,7 +3,6 @@ using BaseProjectMvc_Net8.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace BaseProjectMvc_Net8.Controllers
 {

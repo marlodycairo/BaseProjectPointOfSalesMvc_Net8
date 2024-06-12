@@ -12,7 +12,6 @@ namespace BaseProjectMvc_Net8.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            // Registrar todas las configuraciones de modelo en el mismo ensamblado que la clase de contexto
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
 

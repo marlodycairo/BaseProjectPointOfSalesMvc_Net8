@@ -4,14 +4,15 @@ using BaseProjectMvc_Net8.Models;
 using BaseProjectMvc_Net8.Repositories.Interfaces;
 using BaseProjectMvc_Net8.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 namespace BaseProjectMvc_Net8.Controllers
 {
     public class HomeController(IProductRepository productRepository, ICategoryRepository categoryRepository,
-                                IHttpContextAccessor httpContext, IInventoryRepository inventoryRepository,
-                                IInvoiceRepository invoiceRepository,
-                                IUserService userService) : Controller
+    IHttpContextAccessor httpContext, IInventoryRepository inventoryRepository,
+    IInvoiceRepository invoiceRepository,
+    IUserService userService) : Controller
     {
         private readonly IProductRepository _productRepository = productRepository;
         private readonly ICategoryRepository _categoryRepository = categoryRepository;
@@ -35,14 +36,18 @@ namespace BaseProjectMvc_Net8.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SearchProduct(string productName)
+        public async Task<IActionResult> SearchProduct([Required]string productName)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var products = await _productRepository.GetProductByName(productName);
 
             var model = new ResponseViewModel
             {
                 ProductsList = [.. products.Result!],
-                //ItemsSelected = items,
                 ItemSelected = new ItemModel()
             };
 
@@ -158,8 +163,6 @@ namespace BaseProjectMvc_Net8.Controllers
 
             return RedirectToAction("Index", "Home");
         }
-
-		// pendiente login y corregir boton cantidad
 
 		public IActionResult Privacy()
 		{

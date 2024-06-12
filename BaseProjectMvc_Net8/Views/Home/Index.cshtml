@@ -48,11 +48,11 @@
 										<input type="hidden" name="product_name" value="@item.Product_Name" />
 										<div class="action-wrap">
 											<input type="hidden" name="product_Id" value="@item.Product_Id" />
-
+											<div class="">
 											<button onclick="addProduct(@Html.Raw(JsonConvert.SerializeObject(item)))" class="btn btn-primary btn-sm float-right"><i class="fa fa-cart-plus"></i> Add</button>
-
+											</div>
 											<div class="price-wrap h5">
-												<span class="price-new">$ @item.Price</span>
+												<span class="price-new">$@item.Price</span>
 												<input type="hidden" name="price" value="@item.Price" />
 											</div> <!-- price-wrap.// -->
 										</div> <!-- action-wrap -->
