@@ -5,7 +5,7 @@ namespace BaseProjectMvc_Net8.Services
 {
     public interface IAccountService
     {
-        Task<User> ValidateUser(LoginModel login); //debe retornar bool o info user
+        Task<User> ValidateUser(LoginModel login);
         Task RegisterUser(RegisterModel register);
     }
 }
