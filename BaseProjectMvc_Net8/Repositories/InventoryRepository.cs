@@ -19,7 +19,7 @@ namespace BaseProjectMvc_Net8.Repositories
         public async Task<IEnumerable<Inventory>> GetInventories()
         {
             return await _context.Inventories.Include(p => p.Product)
-                .ThenInclude(x => x.Category).ToListAsync();
+                .ThenInclude(x => x!.Category).ToListAsync();
         }
 
         public async Task<Inventory> GetInventoryById(int? id)
@@ -32,7 +32,7 @@ namespace BaseProjectMvc_Net8.Repositories
 		public async Task<Inventory> GetInventoryByProductId(int? id)
 		{
             var product = await _context.Inventories.Include(p => p.Product)
-                .ThenInclude(x => x.Category).FirstOrDefaultAsync(x => x.Product_Id == id);
+                .ThenInclude(x => x!.Category).FirstOrDefaultAsync(x => x.Product_Id == id);
 
             return product!;
 		}

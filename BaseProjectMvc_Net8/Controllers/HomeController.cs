@@ -42,7 +42,7 @@ namespace BaseProjectMvc_Net8.Controllers
             var model = new ResponseViewModel
             {
                 ProductsList = [.. products.Result!],
-                ItemsSelected = items,
+                //ItemsSelected = items,
                 ItemSelected = new ItemModel()
             };
 
@@ -79,7 +79,7 @@ namespace BaseProjectMvc_Net8.Controllers
 
         public IActionResult DeleteItem(Guid id)
         {
-            var items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
+            //var items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
 
             var item = items.Where(x => x.Id == id).FirstOrDefault();
 
@@ -100,7 +100,7 @@ namespace BaseProjectMvc_Net8.Controllers
         [HttpPost]
         public IActionResult CalculateSubtotal(ItemModel itemModel)
         {
-            items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
+            //items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
 
             foreach (var item in items.ToList())
             {
@@ -126,7 +126,7 @@ namespace BaseProjectMvc_Net8.Controllers
 
         public async Task<IActionResult> CreateInvoice()
         {
-            items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
+            //items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
 
 
             foreach (var item in items)

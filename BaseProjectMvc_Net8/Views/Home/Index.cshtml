@@ -1,10 +1,14 @@
-﻿@using BaseProjectMvc_Net8.Extensions
-@using Microsoft.AspNetCore.Http
+﻿@using Microsoft.AspNetCore.Http
+@using BaseProjectMvc_Net8.Extensions
+@using Newtonsoft.Json
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @model BaseProjectMvc_Net8.Models.ResponseViewModel
 
 @{
 	ViewData["Title"] = "Home Page";
+
+	var list = HttpContextAccessor.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
 }
 
 <div class="col-lg-6 col-sm-6">
@@ -27,36 +31,36 @@
 		<div class="row">
 			<div class="col-md-8 card padding-y-sm card ">
 				<span id="items">
+
 					<div class="row">
 						@foreach (var item in Model.ProductsList!)
 						{
+							var jsonItem = JsonConvert.SerializeObject(item);
 							<div class="col-md-3">
-								<form method="post" asp-action="AddItem" asp-controller="Home">
-									<figure class="card card-product">
-										<span class="badge-new"> NEW </span>
-										<div class="img-wrap">
-											<img src="~/images/items/farmaceutica.jpg">
-											<a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
-										</div>
-										<figcaption class="info-wrap">
-											<a href="#" class="title">@item.Product_Name</a>
-											<input type="hidden" name="product_name" value="@item.Product_Name" />
-											<div class="action-wrap">
-													<input type="hidden" name="product_Id" value="@item.Product_Id" />
-													<button class="btn btn-primary btn-sm float-right"><i class="fa fa-cart-plus"></i> Add</button>
-												@*<a href="@Url.Action("AddItem", "Home", new { id = @item.Product_Id})" class="btn btn-primary btn-sm float-right"> <i class="fa fa-cart-plus"></i> Add </a>
-											*@<div class="price-wrap h5">
-													<span class="price-new">$ @item.Price</span>
-													<input type="hidden" name="price" value="@item.Price" />
-												</div> <!-- price-wrap.// -->
-											</div> <!-- action-wrap -->
-										</figcaption>
-									</figure>
-								</form>
-							 <!-- card // -->
-						</div> <!-- col // -->
+								<figure class="card card-product">
+									<span class="badge-new"> NEW </span>
+									<div class="img-wrap">
+										<img src="~/images/items/farmaceutica.jpg">
+										<a class="btn-overlay" href="#"><i class="fa fa-search-plus"></i> Quick view</a>
+									</div>
+									<figcaption class="info-wrap">
+										<a href="#" class="title">@item.Product_Name</a>
+										<input type="hidden" name="product_name" value="@item.Product_Name" />
+										<div class="action-wrap">
+											<input type="hidden" name="product_Id" value="@item.Product_Id" />
+
+											<button onclick="addProduct(@Html.Raw(JsonConvert.SerializeObject(item)))" class="btn btn-primary btn-sm float-right"><i class="fa fa-cart-plus"></i> Add</button>
+
+											<div class="price-wrap h5">
+												<span class="price-new">$ @item.Price</span>
+												<input type="hidden" name="price" value="@item.Price" />
+											</div> <!-- price-wrap.// -->
+										</div> <!-- action-wrap -->
+									</figcaption>
+								</figure>
+							</div> <!-- col // -->
 						}
-					</div> <!-- row.// -->
+					</div> <!-- row // -->
 				</span>
 			</div>
 			<div class="col-md-4">
@@ -72,12 +76,10 @@
 								</tr>
 							</thead>
 							<tbody>
-								@foreach (var item in Model.ItemsSelected!)
+
+								@foreach (var item in list)
 								{
 									<tr>
-
-
-										<form id="quantityForm" method="post" asp-action="CalculateSubtotal" asp-controller="Home">
 										<input type="hidden" name="id" value="@item.Id" />
 										<td>
 											<figure class="media">
@@ -105,7 +107,7 @@
 										<td class="text-right">
 											<a href="@Url.Action("DeleteItem", "Home", new { id = item.Id})" class="btn btn-outline-danger"> <i class="fa fa-trash"></i></a>
 										</td>
-										</form>
+
 
 									</tr>
 								}
@@ -138,7 +140,7 @@
 @* 							<a href="" class="btn  btn-default btn-error btn-lg btn-block"><i class="fa fa-times-circle "></i> Cancel </a>
  *@						</div>
 						<div class="col-md-6">
-							<a href="@Url.Action("CreateInvoice", "Home", new { items = Model.ItemsSelected.ToList() })" class="btn  btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i> Charge </a>
+							<a href="@Url.Action("CreateInvoice", "Home", new { items = Model.ItemsSelected?.ToList() })" class="btn  btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i> Charge </a>
 						</div>
 					</div>
 				</div> <!-- box.// -->
@@ -148,6 +150,10 @@
 </section>
 
 <script>
+
+	function AddProduct(item) {
+		console.log(item);
+	}
 
 	document.addEventListener('DOMContentLoaded', function () {
 		var input = document.getElementById('quantity');
