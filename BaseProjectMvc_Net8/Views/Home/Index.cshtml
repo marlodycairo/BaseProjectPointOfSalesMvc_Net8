@@ -93,7 +93,7 @@
 										<td class="text-center">
 											<div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
 
-												<input type="text" id="quantity" onchange="getQuantity(event)" onkeyup="getQuantity(event)" name="quantity" min="0" />
+												<input type="text" id="quantity" onchange="getQuantity(event)" name="quantity" min="0" />
 
 											</div>
 										</td>
@@ -106,8 +106,6 @@
 										<td class="text-right">
 											<a href="@Url.Action("DeleteItem", "Home", new { id = item.Id})" class="btn btn-outline-danger"> <i class="fa fa-trash"></i></a>
 										</td>
-
-
 									</tr>
 								}
 							</tbody>
@@ -170,6 +168,8 @@
 				if (response.ok) {
 					// Manejar la respuesta exitosa, por ejemplo, actualizar la UI
 					console.log("Item added successfully!");
+
+					window.location.reload();
 				} else {
 					console.error("Error adding item:", response.statusText);
 				}
