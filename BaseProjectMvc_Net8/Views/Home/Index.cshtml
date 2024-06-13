@@ -1,6 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using BaseProjectMvc_Net8.Extensions
 @using Newtonsoft.Json
+
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
 @model BaseProjectMvc_Net8.Models.ResponseViewModel
@@ -48,9 +49,7 @@
 										<input type="hidden" name="product_name" value="@item.Product_Name" />
 										<div class="action-wrap">
 											<input type="hidden" name="product_Id" value="@item.Product_Id" />
-		
-											<button onclick="addProduct(@Html.Raw(JsonConvert.SerializeObject(item)))" class="btn btn-primary btn-sm float-right"><i class="fa fa-cart-plus"></i> Add</button>
-							
+											<button class="btn btn-primary btn-sm float-right addProductBtn" data-item='@Html.Raw(jsonItem)'><i class="fa fa-cart-plus"></i> Add</button>
 											<div class="price-wrap h5">
 												<span class="price-new">$@item.Price</span>
 												<input type="hidden" name="price" value="@item.Price" />
@@ -151,8 +150,33 @@
 
 <script>
 
-	function AddProduct(item) {
+	document.querySelectorAll('.addProductBtn').forEach(button => {
+		button.addEventListener('click', function () {
+			let item = JSON.parse(this.dataset.item);
+			addProduct(item);
+		});
+	});
+
+	function addProduct(item) {
 		console.log(item);
+		fetch('@Url.Action("AddItem", "Home")', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(item)
+		})
+			.then(response => {
+				if (response.ok) {
+					// Manejar la respuesta exitosa, por ejemplo, actualizar la UI
+					console.log("Item added successfully!");
+				} else {
+					console.error("Error adding item:", response.statusText);
+				}
+			})
+			.catch(error => {
+				console.error("Error adding item:", error);
+			});
 	}
 
 	document.addEventListener('DOMContentLoaded', function () {

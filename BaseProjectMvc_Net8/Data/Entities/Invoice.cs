@@ -5,6 +5,6 @@
 		public int Id { get; set; }
 		public int PurchaseOrder { get; set; }
 		public int Customer_Id { get; set; }
-		public decimal Total { get; set; }
+		public int Total { get; set; }
 	}
 }

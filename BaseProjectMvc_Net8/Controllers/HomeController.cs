@@ -55,7 +55,7 @@ namespace BaseProjectMvc_Net8.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddItem(ItemModel itemModel)
+        public IActionResult AddItem([FromBody]ItemModel itemModel)
         {
             var items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
 
@@ -73,7 +73,7 @@ namespace BaseProjectMvc_Net8.Controllers
 
             var model = new ResponseViewModel
             {
-                ItemsSelected = items,
+                //ItemsSelected = items,
                 ProductsList = [],
                 ItemSelected = itemModel
             };
@@ -95,7 +95,7 @@ namespace BaseProjectMvc_Net8.Controllers
             var model = new ResponseViewModel
             {
                 ItemSelected = new ItemModel(),
-                ItemsSelected = items,
+                //ItemsSelected = items,
                 ProductsList = []
             };
 
