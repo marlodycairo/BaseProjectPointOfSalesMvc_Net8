@@ -84,8 +84,6 @@ namespace BaseProjectMvc_Net8.Controllers
 
         public IActionResult DeleteItem(Guid id)
         {
-            //var items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
-
             var item = items.Where(x => x.Id == id).FirstOrDefault();
 
             items.Remove(item!);
@@ -95,7 +93,6 @@ namespace BaseProjectMvc_Net8.Controllers
             var model = new ResponseViewModel
             {
                 ItemSelected = new ItemModel(),
-                //ItemsSelected = items,
                 ProductsList = []
             };
 
@@ -103,37 +100,32 @@ namespace BaseProjectMvc_Net8.Controllers
         }
 
         [HttpPost]
-        public IActionResult CalculateSubtotal(ItemModel itemModel)
+        public IActionResult CalculateSubtotal([FromBody]ItemModel itemModel)
         {
-            //items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
+            var item = items.FirstOrDefault(x => x.Id == itemModel.Id);
 
-            foreach (var item in items.ToList())
+            if (item is null)
             {
-                if (item.Id.Equals(itemModel.Id))
-                {
-                    item.Quantity = itemModel.Quantity;
-                }
+                return Json(new { success = false, message = "Item not found"});
             }
 
-            _httpContext.HttpContext?.Session.SetObjectAsJson("Items", items);
+			item.Quantity = itemModel.Quantity;
 
-            var model = new ResponseViewModel
-            {
-                ItemSelected = itemModel,
-                ItemsSelected = items,
-                ProductsList = []
-            };
+            item.Total = items.Sum(x => x.Subtotal);
 
-            ViewBag.Total = items.Sum(x => x.Subtotal);
+			_httpContext.HttpContext?.Session.SetObjectAsJson("Items", items);
 
-            return View("Index", model);
+            TempData["quantity"] = item.Quantity;
+
+            TempData["Subtotal"] = item.Subtotal;
+
+            TempData["Total"] = item.Total;
+
+			return Json(new { success = true, subtotal = itemModel.Subtotal, total = item.Total });
         }
 
         public async Task<IActionResult> CreateInvoice()
         {
-            //items = _httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
-
-
             foreach (var item in items)
             {
                 var product = await _inventoryRepository.GetInventoryByProductId(item.Product_Id);

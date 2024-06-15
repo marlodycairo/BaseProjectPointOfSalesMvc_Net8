@@ -10,7 +10,7 @@
 
         public int Price { get; set; }
 
-        public decimal Subtotal
+        public int Subtotal
         {
             get
             {
@@ -22,6 +22,6 @@
 
         public int StockProducts { get; set; }
 
-        public decimal Total { get; set; }
+        public int Total { get; set; }
     }
 }

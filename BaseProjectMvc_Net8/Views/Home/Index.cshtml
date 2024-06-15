@@ -10,6 +10,8 @@
 	ViewData["Title"] = "Home Page";
 
 	var list = HttpContextAccessor.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
+
+	TempData.Keep();
 }
 
 <div class="col-lg-6 col-sm-6">
@@ -32,7 +34,6 @@
 		<div class="row">
 			<div class="col-md-8 card padding-y-sm card ">
 				<span id="items">
-
 					<div class="row">
 						@foreach (var item in Model.ProductsList!)
 						{
@@ -75,11 +76,9 @@
 								</tr>
 							</thead>
 							<tbody>
-
 								@foreach (var item in list)
 								{
 									<tr>
-										<input type="hidden" name="id" value="@item.Id" />
 										<td>
 											<figure class="media">
 												<div class="img-wrap"><img src="~/images/items/farmaceutica.jpg" class="img-thumbnail img-xs"></div>
@@ -93,7 +92,7 @@
 										<td class="text-center">
 											<div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
 
-												<input type="text" id="quantity" onchange="getQuantity(event)" name="quantity" min="0" />
+												<input type="text" id="quantity" onchange="getQuantity(event)" name="quantity" value="@TempData["quantity"]" min="0" data-id="@item.Id" data-price="@item.Price" />
 
 											</div>
 										</td>
@@ -113,6 +112,7 @@
 					</span>
 				</div> <!-- card.// -->
 				<div class="box">
+
 					<dl class="dlist-align">
 						<dt>Tax: </dt>
 						<dd class="text-right">0%</dd>
@@ -123,23 +123,23 @@
 					</dl>
 					<dl class="dlist-align">
 						<dt>Sub Total:</dt>
-						<dd class="text-right">$ @Model.ItemSelected?.Subtotal</dd>
+						<dd id="subtotal-display" class="text-right">$ @TempData["Subtotal"]</dd>
 					</dl>
 					<dl class="dlist-align">
 						<dt>Total: </dt>
-						<dd class="text-right h4 b"> $ @ViewBag.Total </dd>
+						<dd id="total-display" class="text-right h4 b"> $ @TempData["Total"] </dd>
 					</dl>
 					<div class="row">
 						<div class="col-md-6">
 							<form method="post" asp-action="ClearItems" asp-controller="Home">
 								<button class="btn  btn-default btn-error btn-lg btn-block" type="submit"><i class="fa fa-times-circle "></i>Cancel</button>
 							</form>
-@* 							<a href="" class="btn  btn-default btn-error btn-lg btn-block"><i class="fa fa-times-circle "></i> Cancel </a>
- *@						</div>
+						</div>
 						<div class="col-md-6">
 							<a href="@Url.Action("CreateInvoice", "Home", new { items = Model.ItemsSelected?.ToList() })" class="btn  btn-primary btn-lg btn-block"><i class="fa fa-shopping-bag"></i> Charge </a>
 						</div>
 					</div>
+
 				</div> <!-- box.// -->
 			</div>
 		</div>
@@ -179,12 +179,66 @@
 			});
 	}
 
-	document.addEventListener('DOMContentLoaded', function () {
+	function getQuantity(event) {
+		console.log(event)
+
+		let input = event.target;
+		console.log(input)
+
+		let itemId = input.getAttribute('data-id');
+		console.log(itemId)
+
+		let price = input.getAttribute('data-price');
+		console.log(price);
+
+		let quantity = input.value;
+		console.log(quantity)
+
+		let itemModel = {
+			id: itemId,
+			price: price,
+			quantity: quantity
+		}
+
+
+		fetch('@Url.Action("CalculateSubtotal", "Home")', {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(itemModel)
+		})
+			.then(response => response.json())
+			.then(data => {
+
+				console.log(data);
+
+				if (data.success) {
+
+					console.log("Quantity updated successfully");
+
+					document.getElementById('quantity').innerText = `$ ${data.quantity}`;
+					document.getElementById('subtotal-display').innerText = `$ ${data.subtotal.toFixed(2)}`;
+					document.getElementById('total-display').innerText = `$ ${data.total.toFixed(2)}`;
+
+					window.location.reload();
+				} else {
+					console.error("Error updating quantity: ", data.message);
+				}
+			})
+			.catch(error => {
+				console.error("Error updating quantity: ", error);
+
+				console.log(error);
+			});
+	}
+
+	@* document.addEventListener('DOMContentLoaded', function () {
 		var input = document.getElementById('quantity');
 
 		input.addEventListener('change', function () {
 			document.getElementById('quantityForm').submit();
 		});
-	});
+	}); *@
 
 </script>
