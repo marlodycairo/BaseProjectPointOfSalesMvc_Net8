@@ -1,6 +1,7 @@
 ﻿using BaseProjectMvc_Net8.Data.Context;
 using BaseProjectMvc_Net8.Data.Entities;
 using BaseProjectMvc_Net8.Models;
+using BaseProjectMvc_Net8.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 

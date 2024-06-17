@@ -1,5 +1,5 @@
 ﻿using BaseProjectMvc_Net8.Models;
-using BaseProjectMvc_Net8.Services;
+using BaseProjectMvc_Net8.Services.IServices;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;

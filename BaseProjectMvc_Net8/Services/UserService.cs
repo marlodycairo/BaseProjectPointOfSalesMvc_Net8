@@ -1,10 +1,11 @@
 ﻿using BaseProjectMvc_Net8.Data.Context;
 using BaseProjectMvc_Net8.Data.Entities;
+using BaseProjectMvc_Net8.Services.IServices;
 using Microsoft.EntityFrameworkCore;
 
 namespace BaseProjectMvc_Net8.Services
 {
-	public class UserService(ApplicationDbContext context) : IUserService
+    public class UserService(ApplicationDbContext context) : IUserService
 	{
 		private readonly ApplicationDbContext _context = context;
 		public const int TotalAllowedBeneficiaries = 5;
