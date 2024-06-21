@@ -3,8 +3,11 @@ using BaseProjectMvc_Net8.Repositories;
 using BaseProjectMvc_Net8.Repositories.Interfaces;
 using BaseProjectMvc_Net8.Services;
 using BaseProjectMvc_Net8.Services.IServices;
+using BaseProjectMvc_Net8.Utils;
+using BaseProjectMvc_Net8.Utils.IUtils;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using QuestPDF.Infrastructure;
 
 namespace BaseProjectMvc_Net8
 {
@@ -14,6 +17,7 @@ namespace BaseProjectMvc_Net8
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            QuestPDF.Settings.License = LicenseType.Community;
             // Add services to the container.
 
             builder.Services.AddDistributedMemoryCache();
@@ -47,6 +51,8 @@ namespace BaseProjectMvc_Net8
             builder.Services.AddScoped<IOrderService, OrderService>();
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAccountService, AccountService>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IPrintInvoice, PrintInvoice>();
 
             var app = builder.Build();
 

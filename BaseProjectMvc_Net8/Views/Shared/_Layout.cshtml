@@ -46,18 +46,6 @@
 						<h2 class="logo-text">PharmaStore</h2>
 					</div> <!-- brand-wrap.// -->
 				</div>
-				@* <div class="col-lg-6 col-sm-6">
-					<form method="post" asp-action="SearchProduct" asp-controller="Home" class="search-wrap">
-						<div class="input-group">
-							<input type="text" name="productName" class="form-control" placeholder="Search">
-							<div class="input-group-append">
-								<button class="btn btn-primary" type="submit">
-									<i class="fa fa-search"></i>
-								</button>
-							</div>
-						</div>
-					</form> <!-- search-wrap .end// -->
-				</div> *@ <!-- col.// -->
 				<div class="col-lg-3 col-sm-6">
 					<div class="widgets-wrap d-flex justify-content-end">
 						<div class="widget-header">
@@ -70,16 +58,6 @@
 								</a>
 							</a>
 						</div> <!-- widget .// -->
-						@* <div class="widget-header dropdown">
-							<a href="@Url.Action("Index", "Account")" class="ml-3 icontext" data-toggle="dropdown" data-offset="20,10">
-								<img src="~/images/avatars/bshbsh.png" class="avatar" alt="">
-							</a>
-							<div class="dropdown-menu dropdown-menu-right">
-								<a class="dropdown-item" href="@Url.Action("Register", "Account")"><i class="fa fa-user-plus"></i> Register User</a>
-								<a class="dropdown-item" href="@Url.Action("Login", "Account")"><i class="fa fa-sign-in-alt "></i> Login</a>
-								<a class="dropdown-item" href="@Url.Action("Logout", "Account")"><i class="fa fa-sign-out-alt"></i> Logout</a>
-							</div> <!--  dropdown-menu .// -->
-						</div> <!-- widget  dropdown.// --> *@
 
 						<partial name="_LoginPartial" />
 
@@ -123,92 +101,3 @@
 </body>
 </html>
 
-
-
-
-
-
-@* <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - BaseProjectMvc_Net8</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/BaseProjectMvc_Net8.styles.css" asp-append-version="true" />
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/logos/squanchy.jpg">
-    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/logos/squanchy.jpg">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/logos/squanchy.jpg"> *@
-    <!-- jQuery -->
-    <!-- Bootstrap4 files-->
-@*     <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="assets/css/ui.css" rel="stylesheet" type="text/css" />
-    <link href="assets/fonts/fontawesome/css/fontawesome-all.min.css" type="text/css" rel="stylesheet">
-    <link href="assets/css/OverlayScrollbars.css" type="text/css" rel="stylesheet" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-controller="Home" asp-action="Index">PharmaStore</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Category" asp-action="Index">Categories</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-controller="Product" asp-action="Index">Products</a>
-                        </li>
-                    </ul> *@
-                    @* <form class="d-flex" role="search">
-                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                        <button class="btn btn-outline-success" type="submit">Search</button>
-                    </form> *@
-@*                 </div>
-            </div>
-        </nav> *@
-
-        @* <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">BaseProjectMvc_Net8</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav> *@
-@*     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2024 - BaseProjectMvc_Net8 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
-</body>
-</html> *@

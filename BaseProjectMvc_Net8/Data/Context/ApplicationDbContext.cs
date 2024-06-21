@@ -19,7 +19,7 @@ namespace BaseProjectMvc_Net8.Data.Context
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
-        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<Order> Orders { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
 

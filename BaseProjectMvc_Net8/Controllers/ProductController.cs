@@ -52,7 +52,7 @@ namespace BaseProjectMvc_Net8.Controllers
 
             var productUpdated = new Product();
 
-            var response = await _productRepository.GetProductById(product.Id);
+            var response = await _productRepository.GetProductById(product.Product_Id);
 
             productUpdated = response.Result;
 

@@ -13,21 +13,21 @@ namespace BaseProjectMvc_Net8.Repositories
 		{
 			await _context.Invoices.AddAsync(invoice);
 
-			await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
 
 			return invoice;
 		}
 
 		public async Task<Invoice> GetInvoiceById(int id)
 		{
-			var invoice = await _context.Invoices.FirstOrDefaultAsync(x => x.Id == id);
+			var invoice = await _context.Invoices.Include(x => x.Orders).ThenInclude(x => x.Product).FirstOrDefaultAsync(x => x.Invoice_Id == id);
 
 			return invoice!;
 		}
 
 		public async Task<IEnumerable<Invoice>> GetInvoices()
 		{
-			return await _context.Invoices.ToListAsync();
+			return await _context.Invoices.Include(x => x.Orders).ToListAsync();
 		}
 	}
 }

@@ -3,6 +3,7 @@ using BaseProjectMvc_Net8.Extensions;
 using BaseProjectMvc_Net8.Models;
 using BaseProjectMvc_Net8.Repositories.Interfaces;
 using BaseProjectMvc_Net8.Services.IServices;
+using BaseProjectMvc_Net8.Utils.IUtils;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
@@ -11,26 +12,33 @@ namespace BaseProjectMvc_Net8.Controllers
 {
 	public class HomeController(IProductRepository productRepository, ICategoryRepository categoryRepository,
 	IHttpContextAccessor httpContext, IInventoryRepository inventoryRepository,
-	IInvoiceRepository invoiceRepository,
-	IUserService userService) : Controller
+	IOrderRepository orderRepository,IInvoiceRepository invoiceRepository, IUserRepository userRepository,
+	IUserService userService, IPrintInvoice printInvoice) : Controller
 	{
 		private readonly IProductRepository _productRepository = productRepository;
 		private readonly ICategoryRepository _categoryRepository = categoryRepository;
 		private readonly IHttpContextAccessor _httpContext = httpContext;
 		private readonly IInventoryRepository _inventoryRepository = inventoryRepository;
+		private readonly IOrderRepository _orderRepository = orderRepository;
 		private readonly IInvoiceRepository _invoiceRepository = invoiceRepository;
 		private readonly IUserService _userService = userService;
+		private readonly IUserRepository _userRepository = userRepository;
+		private readonly IPrintInvoice _printInvoice = printInvoice;
 
-		public List<ItemModel> items = httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
+        public List<ItemModel> items = httpContext.HttpContext?.Session.GetObjectFromJson<List<ItemModel>>("Items") ?? [];
 
-		public IActionResult Index()
+		public async Task<IActionResult> Index()
 		{
+			var users = await _userRepository.GetCustomers();
+
 			var model = new ResponseViewModel
 			{
 				ProductsList = [],
 				ItemsSelected = [],
-				ItemSelected = new ItemModel()
-			};
+				ItemSelected = new ItemModel(),
+				Users = users.ToList(),
+                OrdersInvoice = []
+            };
 
 			return View(model);
 		}
@@ -48,8 +56,10 @@ namespace BaseProjectMvc_Net8.Controllers
 			var model = new ResponseViewModel
 			{
 				ProductsList = [.. products.Result!],
-				ItemSelected = new ItemModel()
-			};
+				ItemSelected = new ItemModel(),
+				Users = [],
+                OrdersInvoice = []
+            };
 
 			return View("Index", model);
 		}
@@ -75,7 +85,8 @@ namespace BaseProjectMvc_Net8.Controllers
 			{
 				//ItemsSelected = items,
 				ProductsList = [],
-				ItemSelected = itemModel
+				ItemSelected = itemModel,
+				Users = []
 			};
 
 			return View("Index", model);
@@ -93,7 +104,8 @@ namespace BaseProjectMvc_Net8.Controllers
 			var model = new ResponseViewModel
 			{
 				ItemSelected = new ItemModel(),
-				ProductsList = []
+				ProductsList = [],
+				Users = []
 			};
 
 			return View("Index", model);
@@ -115,8 +127,6 @@ namespace BaseProjectMvc_Net8.Controllers
 
 			_httpContext.HttpContext?.Session.SetObjectAsJson("Items", items);
 
-			TempData["quantity"] = item.Quantity;
-
 			TempData["Subtotal"] = item.Subtotal;
 
 			TempData["Total"] = item.Total;
@@ -126,24 +136,53 @@ namespace BaseProjectMvc_Net8.Controllers
 
 		public async Task<IActionResult> CreateInvoice()
 		{
-			foreach (var item in items)
+
+            var invoice = new Invoice
+            {
+                DateInvoice = DateTime.UtcNow,
+                Customer_Id = 1
+            };
+
+            await _invoiceRepository.AddInvoice(invoice);
+
+            foreach (var item in items)
 			{
 				var product = await _inventoryRepository.GetInventoryByProductId(item.Product_Id);
 
-				//actualizar inventario
-				product!.Stock = product.Stock - item.Quantity;
+				if (product.Stock < item.Quantity)
+				{
+					return View();
+				}
+
+				var order = new Order
+				{
+					DateOrder = DateTime.UtcNow,
+					Product_Id = item.Product_Id,
+					Quantity = item.Quantity,
+					Invoice_Id = invoice.Invoice_Id,
+				};
+
+				await _orderRepository.CreateOrder(order);
+
+				//invoiceAdded.Orders.Add(order);
+
+				product!.Stock -= item.Quantity;
 
 				await _inventoryRepository.UpdateInventory(product);
 			}
 
+			var invoiceAdded = await _invoiceRepository.GetInvoiceById(invoice.Invoice_Id);
+
 			var model = new ResponseViewModel
 			{
 				ItemSelected = new ItemModel(),
-				ItemsSelected = items,
-				ProductsList = []
+				ProductsList = [],
+				Users = [],
+				OrdersInvoice = invoiceAdded.Orders
 			};
 
 			ViewBag.Total = $"Total invoice: $ {items.Sum(x => x.Subtotal)}";
+			ViewBag.InvoiceId = invoice.Invoice_Id;
 
 			return View("CreateInvoice", model);
 		}
@@ -154,6 +193,18 @@ namespace BaseProjectMvc_Net8.Controllers
 			_httpContext.HttpContext?.Session.Remove("Items");
 
 			return RedirectToAction("Index", "Home");
+		}
+
+		public async Task<IActionResult> PrintInvoice(int invoiceId)
+		{
+			var pdfData = await _printInvoice.PDF(invoiceId);
+
+			var stream = new MemoryStream(pdfData);
+
+			var contentType = "application/pdf";
+			var filename = $"{Guid.NewGuid()}.pdf";
+
+			return File(stream, contentType, filename);
 		}
 
 		public IActionResult Privacy()

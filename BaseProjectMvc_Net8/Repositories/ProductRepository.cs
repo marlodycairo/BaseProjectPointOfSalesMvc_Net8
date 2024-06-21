@@ -31,7 +31,7 @@ namespace BaseProjectMvc_Net8.Repositories
         {
             var response = new GenericResponse<Product>();
 
-            var product = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            var product = await _context.Products.FirstOrDefaultAsync(x => x.Product_Id == id);
 
             response.Result = product;
 
@@ -60,11 +60,11 @@ namespace BaseProjectMvc_Net8.Repositories
             var products = new GenericResponse<List<ItemModel>>
             {
                 Result = await _context.Products
-                   .Where(x => x.Product_Name.ToLower() == productName.ToLower())
+                   .Where(x => x.Product_Name.ToLower().Contains(productName.ToLower()))
                    .Select(x => new ItemModel
                    {
                        Product_Name = x.Product_Name,
-                       Product_Id = x.Id,
+                       Product_Id = x.Product_Id,
                        Price = x.Price
                    }).ToListAsync()
             };

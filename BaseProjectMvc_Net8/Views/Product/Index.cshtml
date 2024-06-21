@@ -21,9 +21,9 @@
                 @item.Price
             </div>
             <div class="col">
-                @Html.ActionLink("Details", "Details", "Product", new { id = item.Id }, new { @class = "btn btn-primary" })
-                @Html.ActionLink("Edit", "Edit", "Product", new { id = item.Id }, new { @class = "btn btn-warning" })
-                @Html.ActionLink("Delete", "Edit", "Product", new { id = item.Id }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Details", "Details", "Product", new { id = item.Product_Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "Edit", "Product", new { id = item.Product_Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Edit", "Product", new { id = item.Product_Id }, new { @class = "btn btn-danger" })
             </div>
         }
     </div>

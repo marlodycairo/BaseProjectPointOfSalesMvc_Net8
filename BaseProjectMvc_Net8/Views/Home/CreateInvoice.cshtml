@@ -2,29 +2,47 @@
 @model BaseProjectMvc_Net8.Models.ResponseViewModel
 
 @{
+    var subtotal = 0;
+    var total = 0;
 }
 
 <div class="container-md">
     <h3>Invoice</h3>
-    <div class="table-bordered" style="width:30%">
-        <p>&nbsp;&nbsp;&nbsp; Product Name    -   Quantity    -   Price</p>
-        <ul>
-            @foreach (var item in Model.ItemsSelected!)
-            {
-                <li>@item.Product_Name.ToUpper() - @item.Quantity - @item.Subtotal</li>
-            }
-        </ul>
+    <div class="" style="width:60%">
+
+        <table class="border-3 table table-bordered">
+                <tr>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Subtotal</th>
+                </tr>
+            <tbody>
+                @foreach (var item in Model.OrdersInvoice)
+                {
+                    subtotal = (item.Product.Price * item.Quantity);
+                    <tr>
+                        <td>@item.Product.Product_Name</td>
+                        <td>@item.Quantity</td>
+                        <td>@subtotal</td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+        <p style="font-size:20px;">Total: <b>    @Model.OrdersInvoice.Sum(x => x.Product.Price * x.Quantity)</b></p>
     </div>
-    
+
 
     <p><strong>@ViewBag.Message</strong></p>
 
     <div>
+        <form method="post" asp-action="ClearItems" asp-controller="Home">
+            <button class="btn btn-outline-primary" type="submit">Back to home</button>
 
-            <form method="post" asp-action="ClearItems" asp-controller="Home">
-                <button type="submit">Back to home</button>
-            </form>
+            @Html.ActionLink("Genere PDF", "PrintInvoice", "Home", new { invoiceId = ViewBag.InvoiceId }, new { @class = "btn btn-outline-primary" })
+
+        </form>
+
     </div>
 </div>
 
-@* refresh la variable de sesión y quedar en 0 *@

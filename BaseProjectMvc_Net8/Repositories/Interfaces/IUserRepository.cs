@@ -6,5 +6,7 @@ namespace BaseProjectMvc_Net8.Repositories.Interfaces
     {
         Task AddUser(User user);
         Task<User> GetUserByEmail(string email);
+        Task<IEnumerable<User>> GetUsers();
+        Task<IEnumerable<User>> GetCustomers();
     }
 }

@@ -8,7 +8,7 @@ namespace BaseProjectMvc_Net8.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Product> builder)
         {
-            builder.HasKey(p => p.Id);
+            builder.HasKey(p => p.Product_Id);
 
             builder.Property(p => p.Product_Name)
                 .IsRequired()

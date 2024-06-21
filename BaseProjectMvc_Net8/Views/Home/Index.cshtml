@@ -14,6 +14,14 @@
 	TempData.Keep();
 }
 
+<style>
+	body {
+		background-image: url('../images/backgrounds/medicine-concept-with-pills-copyspace-left-side.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+	}
+</style>
 <div class="col-lg-6 col-sm-6">
 	<form method="post" asp-action="SearchProduct" asp-controller="Home" class="search-wrap">
 		<div class="input-group">
@@ -92,7 +100,7 @@
 										<td class="text-center">
 											<div class="m-btn-group m-btn-group--pill btn-group mr-2" role="group" aria-label="...">
 
-												<input type="text" id="quantity" onchange="getQuantity(event)" name="quantity" value="@TempData["quantity"]" min="0" data-id="@item.Id" data-price="@item.Price" />
+												<input type="text" id="quantity" onchange="getQuantity(event)" name="quantity" value="@item.Quantity" min="0" data-id="@item.Id" data-price="@item.Price" />
 
 											</div>
 										</td>
@@ -167,15 +175,15 @@
 			.then(response => {
 				if (response.ok) {
 					// Manejar la respuesta exitosa, por ejemplo, actualizar la UI
-					console.log("Item added successfully!");
+					console.log('Item added successfully!');
 
 					window.location.reload();
 				} else {
-					console.error("Error adding item:", response.statusText);
+					console.error('Error adding item:', response.statusText);
 				}
 			})
 			.catch(error => {
-				console.error("Error adding item:", error);
+				console.error('Error adding item:', error);
 			});
 	}
 
@@ -225,11 +233,6 @@
 				} else {
 					console.error("Error updating quantity: ", data.message);
 				}
-			})
-			.catch(error => {
-				console.error("Error updating quantity: ", error);
-
-				console.log(error);
 			});
 	}
 

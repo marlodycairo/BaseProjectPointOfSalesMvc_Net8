@@ -18,5 +18,19 @@ html {
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+    background-image: url('../images/backgrounds/medicine-concept-with-pills-copyspace-left-side.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    color: black;
+}
+
+.container, .navbar, .footer {
+    background-color: transparent;
+}
+
+.header-main, .brand-wrap, .widgets-wrap, .footer, .main, .pb-3 {
+    background-color: transparent !important;
 }
